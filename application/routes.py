@@ -3,6 +3,7 @@ from application import app
 import top_gainers
 import os
 from dotenv import load_dotenv
+import portfolio_analysis as pa
 
 load_dotenv()
 api_key = os.getenv("API_KEY")
@@ -28,7 +29,7 @@ def companies_comparing():
     
 @app.route('/portfolio')
 def portfolio():    
-    return render_template('portfolio_analysis.html', title='Portfolio analysis')
+    return render_template('portfolio_analysis.html', title='Portfolio analysis', fig_correlation_matrix=pa.fig_correlation_matrix, best_stocks=pa.best_stocks)
 
 @app.route('/plot_isrgMsftStocks')
 def plot_isrgMsftStocks():
@@ -60,4 +61,9 @@ def plot_blkMsftSlidingCorrelation():
 
 @app.route('/plot_blkMsftCovariance')
 def plot_blkMsftCovariance():
+
     return render_template('plot_blkMsftCovariance.html')
+
+@app.route('/plot_correlation_matrix')
+def plot_correlation_matrix():
+    return render_template('plot_correlation_matrix.html')

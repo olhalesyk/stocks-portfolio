@@ -26,49 +26,70 @@
             src="{{ url_for('static', filename='img/girl-laptop.png') }}" alt="girl-laptop">
     </div>
 </div>
-<div class="container mx-auto companies grid lg:grid-cols-3 gap-8 px-4 mb-8">
+<div class="container mx-auto companies grid lg:grid-cols-2 gap-8 px-4 mb-8">
+    <div>
+        <p>1. Technology
+            Apple Inc. (AAPL)
+            A leading technology company known for its innovation in consumer electronics, software, and services.
+            2. Healthcare
+            Johnson & Johnson (JNJ)
+            A multinational corporation engaged in the research and development, manufacture, and sale of a broad range
+            of
+            healthcare products.
+            3. Financial Services
+            JPMorgan Chase & Co. (JPM)
+            One of the largest financial institutions in the United States, offering a range of financial services.
+            4. Consumer Goods
+            Procter & Gamble Co. (PG)
+            A leading consumer goods company that provides branded consumer packaged goods in a variety of segments.
+            5. Energy
+            Exxon Mobil Corporation (XOM)
+            A major oil and gas corporation involved in the exploration, production, and distribution of petroleum and
+            petrochemical
+            products.
+            6. Utilities
+            NextEra Energy, Inc. (NEE)
+            A leading clean energy company, with a focus on renewable energy and sustainable energy solutions.
+            7. Telecommunications
+            Verizon Communications Inc. (VZ)
+            A global leader in delivering innovative communications and technology solutions.
+            8. Industrials
+            Caterpillar Inc. (CAT)
+            A global leader in the manufacture of construction and mining equipment, diesel and natural gas engines, and
+            industrial
+            gas turbines.
+            9. Consumer Discretionary
+            The Home Depot, Inc. (HD)
+            The largest home improvement retailer in the United States, providing tools, construction products, and
+            services.
+            10. Information Technology
+            Microsoft Corporation (MSFT)
+            A multinational technology company that develops, licenses, and supports a range of software products,
+            services, and
+            devices.</p>
+    </div>
 
     <div class="company bg-white shadow p-3 sm:p-6 rounded-xl">
-        <div
-            class="company-header flex justify-between items-end w-full space-x-4 pb-4 mb-4 border-b border-border_light">
-            <div class="inline-flex space-x-4 "><img class="max-w-10 max-h-12" src={{data.img_url}} alt="blackrock">
-                <div class="name flex flex-col ">
-                    <p class="font-bold text-primary text-xl"></p>
-                    <p class="text-secondary font-normal">BlackRock Inc.</p>
-                </div>
-            </div>
-            <div class="day pb-1">
-                <p class="font-medium text-primary text-xs capitalize">latest trading day</p>
-                <p class="text-secondary font-normal text-sm "> </p>
+        <div class="company-header flex justify-between items-end w-full space-x-4 border-border_light">
+            <div class="name flex flex-col ">
+                <p class="text-primary font-medium text-xl pb-4">Best stocks for investment:</p>
+                <ul class="flex gap-4 uppercase text-green_500 text-lg">
+                    {% for stock in best_stocks %}
+                    <li>{{ stock }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
 </div>
 <div class="container mx-auto px-4" id="analysis">
-    <h2 class="text-3xl md:text-4xl py-6 text-primary font-bold text-center">BLK & MSFT</h2>
-    <div class="blk-msft mb-12 grid xl:grid-cols-2">
-        <div class="stocks-chart">
-        </div>
-        <div class="stocks-chart-moving">
-        </div>
-        <div class="covariation-chart">
-        </div>
-        <div class="correlation-chart">
+    <h2 class="text-3xl md:text-4xl py-6 text-primary font-bold text-center capitalize">Correlation matrix of chosen
+        companies</h2>
+    <div class="blk-msft mb-12 ">
+        <div class="matrix mx-auto">
+            <iframe src="{{ url_for('plot_correlation_matrix') }}" width="100%" height="500"></iframe>
         </div>
     </div>
-
-    <h2 class="text-3xl md:text-4xl py-6 text-primary font-bold text-center">MSFT & ISRG</h2>
-    <div class="isrg-msft  grid xl:grid-cols-2">
-        <div class="stocks-chart">
-        </div>
-        <div class="stocks-chart-moving">
-        </div>
-        <div class="covariation-chart">
-        </div>
-        <div class="correlation-chart">
-        </div>
-    </div>
-
 </div>
 
 {% endblock %}

@@ -91,3 +91,20 @@ def plot_single_chart(time_index, data, name, title, xaxis_title, yaxis_title):
     # Display the plot
     # fig.show()
     return pio.to_html(fig, full_html=False)
+
+def plot_correlation_matrix(values,columns_x,columns_y,title):
+    # Plot the correlation matrix
+    fig = go.Figure(data=go.Heatmap(
+        z=values,
+        x=columns_x,
+        y=columns_y,
+        colorscale='bupu',
+        zmin=-1, zmax=1,
+        colorbar=dict(title="Correlation")
+    ))
+    fig.update_layout(
+        title=title,
+        xaxis_nticks=36
+    )
+    return pio.to_html(fig, full_html=False)
+

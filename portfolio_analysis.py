@@ -5,6 +5,8 @@ from scipy.special import comb
 import plotly.graph_objects as go
 import itertools
 from itertools import combinations
+import plotly.io as pio
+import functions as fn
 
 # List of stock symbols
 stock_symbols = ["AAPL", "JNJ", "JPM", "PG", "XOM", "NEE", "VZ", "CAT", "HD", "MSFT"]
@@ -48,19 +50,9 @@ best_stocks = find_min_correlation_stocks(correlation_matrix, 4)
 print("Best stocks for minimum correlation:", best_stocks)
 filtered_correlation_matrix = correlation_matrix.loc[best_stocks, best_stocks]
 
-# Plot the correlation matrix
-fig = go.Figure(data=go.Heatmap(
-    z=filtered_correlation_matrix.values,
-    x=filtered_correlation_matrix.columns,
-    y=filtered_correlation_matrix.columns,
-    colorscale='bupu',
-    zmin=-1, zmax=1,
-    colorbar=dict(title="Correlation")
-))
-fig.update_layout(
-    title='Correlation Matrix of Selected Stocks',
-    xaxis_nticks=36
-)
+fig_correlation_matrix = fn.plot_correlation_matrix(filtered_correlation_matrix.values,filtered_correlation_matrix.columns,filtered_correlation_matrix.columns,'Correlation Matrix of Selected Stocks')
 
-fig.show()
+# Save the plot HTML to a file
+with open('application/templates/plot_correlation_matrix.html', 'w') as f:
+    f.write(fig_correlation_matrix)
 
