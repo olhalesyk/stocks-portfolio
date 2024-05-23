@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@preline/collapse": "^2.1.0",
+    "preline": "^2.1.0",
+    "tailwindcss": "^3.4.3"
+  },
+  "description": "Olha Lesyk personal project for PowerCoders ",
+  "main": "script.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./static/css/main.css -o ./static/css/style.css -w",
+    "build-p": "postcss ./static/css/main.css -o ./static/css/style.css -w"
+  }
+}

@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="hero container mx-auto px-4 pt-10 pb-10 md:pt-24 grid sm:grid-cols-2 content-center ">
+    <div class="hero-content py-4 place-content-center">
+        <h1 class="text-4xl md:text-5xl pb-6 font-bold text-primary">Invest in your future</h1>
+        <p class="text-lg font-light text-secondary pb-8">Invest in your future with Smart Investment. We
+            provide
+            the best investment services for you.</p>
+        <a href="portfolio" class="btn w-full md:w-fit">Learn more</a>
+    </div>
+    <div class="flex justify-center sm:justify-end py-4"><img class="w-auto self-center"
+            src="{{ url_for('static', filename='img/girl-laptop.png') }}" alt="girl-laptop">
+    </div>
+</div>
+<div class="gl-section container mx-auto px-4" id="top-gl">
+    <div x-data="
+                   {
+                   openTab: 1,
+                   activeClasses: 'bg-white text-primary shadow-md shadow-inner',
+                   inactiveClasses: 'text-secondary hover:bg-blue_500 hover:text-white',
+                   }
+                   " class="w-full mb-4">
+        <div
+            class=" gl-tabs-toolbar flex flex-col align-middle md:space-x-2 flex-wrap rounded-xl bg-bg_light_blue border border-border_light py-1.5 px-1.5 md:flex-row">
+            <a href="javascript:void(0)" @click="openTab = 1" :class="openTab === 1 ? activeClasses : inactiveClasses"
+                class="px-4 py-2 mb-2 md:mb-0 text-sm font-normal rounded-[10px] lg:px-8">
+                Top 20 stock gainers
+            </a>
+            <a href="javascript:void(0)" @click="openTab = 2" :class="openTab === 2 ? activeClasses : inactiveClasses"
+                class="px-4 py-2 mb-2 md:mb-0 text-sm font-normal rounded-[10px] lg:px-8">
+                Top 20 stock losers
+            </a>
+            <a href="javascript:void(0)" @click="openTab = 3" :class="openTab === 3 ? activeClasses : inactiveClasses"
+                class="px-4 py-2 text-sm font-normal rounded-[10px] lg:px-8">
+                Top 20 most active traded stocks
+            </a>
+        </div>
+        <div class="mt-8 md:mt-12 gl-tabs">
+            <div x-show="openTab === 1" class="gl-tab p-2 flex flex-col bg-white rounded-xl text-secondary">
+                {% if message %}
+                <p class="text-xl font-normal text-red_500 p-8">{{ message }}</p>
+                {% elif stock_data %}
+                {% for stock in stock_data.top_gainers %}
+                <div
+                    class="row p-6 overflow-x-auto flex justify-between border-b border-border_light items-end md:items-center space-x-4 text-sm">
+                    <div class="basis-1/12 gainer text-green_500 font-medium"><span
+                            class="bg-green_500/10 py-2 px-3 rounded-lg">Gainer</span>
+                    </div>
+                    <div class="ticker  basis-1/4 text-primary pl-4 font-medium uppercase">{{stock.ticker}}</div>
+                    <div class="price  basis-1/6 flex flex-col"><span class="title text-xs capitalize">price</span>
+                        <span class="text-primary font-medium">{{stock.price}}</span>
+                    </div>
+                    <div class="change-amount  basis-1/6 flex flex-col"><span class="title text-xs capitalize">change
+                            amount</span><span class="text-primary font-medium">+ {{stock.change_amount}}</span>
+                    </div>
+                    <div class="change_percentage  basis-1/6 flex flex-col"><span
+                            class="title text-xs capitalize">change
+                            percentage</span>
+                        <div class="flex items-center  basis-1/6 space-x-2">
+                            <span class="text-primary font-medium">+ {{stock.change_percentage}}</span><img
+                                src="../static/img/top-arrow.svg" alt="price to top">
+                        </div>
+                    </div>
+                    <div class="volume  basis-1/12 flex flex-col"><span class="title text-xs capitalize">volume</span>
+                        <span class="text-primary font-medium">{{stock.volume}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div x-show="openTab === 2" class="gl-tab p-2 flex flex-col bg-white rounded-xl text-secondary">
+            {% if message %}
+            <p class="text-xl font-normal text-red_500 p-8">{{ message }}</p>
+            {% elif stock_data %}
+            {% for stock in stock_data.top_losers %}
+            <div
+                class="row p-6 overflow-x-auto flex justify-between border-b border-border_light items-end md:items-center space-x-4 text-sm">
+                <div class="basis-1/12 gainer text-red_500 font-medium"><span
+                        class="bg-red_500/10 py-2 px-3 rounded-lg">Loser</span>
+                </div>
+                <div class="ticker  basis-1/4 text-primary pl-4 font-medium uppercase">{{stock.ticker}}</div>
+                <div class="price  basis-1/6 flex flex-col"><span class="title text-xs capitalize">price</span>
+                    <span class="text-primary font-medium">{{stock.price}}</span>
+                </div>
+                <div class="change-amount  basis-1/6 flex flex-col"><span class="title text-xs capitalize">change
+                        amount</span><span class="text-primary font-medium">{{stock.change_amount}}</span>
+                </div>
+                <div class="change_percentage  basis-1/6 flex flex-col"><span class="title text-xs capitalize">change
+                        percentage</span>
+                    <div class="flex items-center  basis-1/6 space-x-2">
+                        <span class="text-primary font-medium">{{stock.change_percentage}}</span>
+                        <img src="../static/img/down-arrow.svg" alt="price to top">
+                    </div>
+                </div>
+                <div class="volume  basis-1/12 flex flex-col"><span class="title text-xs capitalize">volume</span>
+                    <span class="text-primary font-medium">{{stock.volume}}</span>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>"Information": "Thank you for using Alpha Vantage! Our standard API rate limit is 25 requests per day.
+                Please
+                subscribe
+                to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate
+                limits."</p>
+            {% endif %}
+        </div>
+        <div x-show="openTab === 3" class="gl-tab p-2 flex flex-col bg-white rounded-xl text-secondary">
+            {% if message %}
+            <p class="text-xl font-normal text-red_500 p-8">{{ message }}</p>
+            {% elif stock_data %}
+            {% for stock in stock_data.most_actively_traded %}
+            <div
+                class="row p-6 overflow-x-auto flex justify-between border-b border-border_light items-end md:items-center space-x-4 text-sm">
+                <div class="basis-1/6 gainer text-blue_500 font-medium"><span
+                        class="bg-bg_light_blue py-2 px-3 rounded-lg">actively traded</span>
+                </div>
+                <div class="ticker  basis-1/6 text-primary pl-4 font-medium uppercase">{{stock.ticker}}</div>
+                <div class="price  basis-1/6 flex flex-col"><span class="title text-xs capitalize">price</span>
+                    <span class="text-primary font-medium">{{stock.price}}</span>
+                </div>
+                <div class="change-amount  basis-1/6 flex flex-col"><span class="title text-xs capitalize">change
+                        amount</span><span class="text-primary font-medium">{{stock.change_amount}}</span>
+                </div>
+                <div class="change_percentage  basis-1/6 flex flex-col"><span class="title text-xs capitalize">change
+                        percentage</span>
+                    <div class="flex items-center  basis-1/6 space-x-2">
+                        <span class="text-primary font-medium">{{stock.change_percentage}}</span>
+                    </div>
+                </div>
+                <div class="volume  basis-1/12 flex flex-col"><span class="title text-xs capitalize">volume</span>
+                    <span class="text-primary font-medium">{{stock.volume}}</span>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>"Information": "Thank you for using Alpha Vantage! Our standard API rate limit is 25 requests per day.
+                Please
+                subscribe
+                to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate
+                limits."</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

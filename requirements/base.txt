@@ -1,0 +1,13 @@
+click
+Flask
+Flask-SQLAlchemy
+Flask-Script
+itsdangerous
+Jinja2
+MarkupSafe
+psycopg2
+SQLAlchemy
+Werkzeug
+WTForms
+plotly
+pandas
